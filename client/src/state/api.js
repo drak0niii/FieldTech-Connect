@@ -40,6 +40,20 @@ export const api = createApi({
         body: payload,
       }),
     }),
+    postWhisperTranscribe: build.mutation({
+      query: (audioBlob) => {
+        const formData = new FormData();
+        formData.append("audio", audioBlob, "recording.wav");
+        return {
+          url: "/whisper/transcribe",
+          method: "POST",
+          body: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -49,4 +63,5 @@ export const {
   usePostAiAssistMutation,
   usePostLoginMutation,
   usePostSignUpMutation,
+  usePostWhisperTranscribeMutation,
 } = api;

@@ -7,6 +7,7 @@ import morgan from "morgan";
 import { Configuration, OpenAIApi } from "openai";
 import openAiRoutes from "./routes/openai.js";
 import authRoutes from "./routes/auth.js";
+import whisperRoutes from "./routes/whisper.js";
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -28,6 +29,7 @@ export const openai = new OpenAIApi(configuration);
 /* ROUTES */
 app.use("/openai", openAiRoutes);
 app.use("/auth", authRoutes);
+app.use("/whisper", whisperRoutes);
 
 /* ERROR HANDLING */
 app.use((err, req, res, next) => {
@@ -39,4 +41,10 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
+});
+
+// Console log the request body for Whisper API
+app.use("/whisper/transcribe", (req, res, next) => {
+  console.log(req.body);
+  next();
 });
