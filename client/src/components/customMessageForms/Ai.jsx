@@ -40,6 +40,8 @@ const Ai = ({ props, activeChat }) => {
               setAttachment(audioBlob);
             } catch (error) {
               console.error("Error sending audio to Whisper:", error);
+              console.error("Whisper API error:", error.response ? JSON.stringify(error.response.data, null, 2) : error);
+    console.error("Full error object:", JSON.stringify(error, null, 2));
             }
           };
         })

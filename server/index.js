@@ -31,9 +31,14 @@ app.use("/openai", openAiRoutes);
 app.use("/auth", authRoutes);
 app.use("/whisper", whisperRoutes);
 
+app.get("/whisper/test", (req, res) => {
+  res.send("Whisper test route works");
+});
+
 /* ERROR HANDLING */
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error("Error:", err);
+  console.error("Error details:", JSON.stringify(err, null, 2));
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
@@ -41,10 +46,4 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
-});
-
-// Console log the request body for Whisper API
-app.use("/whisper/transcribe", (req, res, next) => {
-  console.log(req.body);
-  next();
 });
